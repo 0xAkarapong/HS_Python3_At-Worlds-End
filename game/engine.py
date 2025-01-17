@@ -1,7 +1,8 @@
 # Engine part
 from utils import *
+from game.constants import *
 class Player:
-    def __init__(self):
+    def __init__(self, x, y, radius):
         pass
     def move(self):
         pass
