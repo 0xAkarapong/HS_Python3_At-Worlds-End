@@ -1,5 +1,5 @@
 import socket
-from constant import HOST, PORT 
+from game.constants import HOST, PORT 
 
 def start_client():
     try:

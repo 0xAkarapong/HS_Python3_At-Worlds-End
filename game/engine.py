@@ -1,4 +1,5 @@
 # Engine part
+from utils import *
 class Player:
     def __init__(self):
         pass
@@ -10,3 +11,4 @@ class Player:
 class Food:
     def __init__(self):
         pass
+

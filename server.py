@@ -1,6 +1,6 @@
 import socket
 import threading
-from constant import HOST, PORT
+from game.constants import HOST, PORT
 
 def broadcast(client):
     pass
