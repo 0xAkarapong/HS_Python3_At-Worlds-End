@@ -70,3 +70,11 @@ class GameState:
     def remove_player(self, player_id):
         if player_id in self.players:
             del self.players[player_id]
+
+    def get_game_state(self) -> dict:
+        players = [player.to_dict() for player in self.players.values()]
+        foods = [food.to_dict() for food in self.foods]
+        return {
+            "players": players,
+            "foods": foods
+        }
