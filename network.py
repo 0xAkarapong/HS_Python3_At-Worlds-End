@@ -1,7 +1,7 @@
 import socket
 import threading
 import pickle
-from  engine import GameState
+from  game.engine import GameState
 
 class Server:
     def __init__(self, host, port):

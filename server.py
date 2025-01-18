@@ -1,7 +1,7 @@
 import time
-from engine import GameState
+from game.engine import GameState
 from network import Server 
-from constants import HOST, PORT
+from game.constants import HOST, PORT
 
 def main():
     game_state = GameState()
