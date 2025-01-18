@@ -76,6 +76,6 @@ class GameState:
         players = [player.to_dict() for player in self.players.values()]
         foods = [food.to_dict() for food in self.foods]
         return {
-          "players": {player_id: player.to_dict() for player_id, player in self.players.items()},
-          "food": [food.to_dict() for food in self.food]
+            "players": players,
+            "foods": foods
         }
