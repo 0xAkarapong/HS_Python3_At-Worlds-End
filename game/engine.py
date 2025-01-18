@@ -53,4 +53,9 @@ class Food:
             "color": self.color,
             "radius": self.radius
         }
+    
+class GameState:
+    def __init__(self, players, foods):
+        self.players = players
+        self.foods = foods
 
