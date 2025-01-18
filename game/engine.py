@@ -1,6 +1,7 @@
 # Engine part
 from utils import *
 from game.constants import *
+import random
 class Player:
     def __init__(self, player_id, x, y, color,radius=STARTING_RADIUS):
         self.player_id = player_id
@@ -55,7 +56,13 @@ class Food:
         }
     
 class GameState:
-    def __init__(self, players, foods):
-        self.players = players
-        self.foods = foods
+    def __init__(self):
+        self.players = {}
+        self.foods = []
+        self.generate_food(INITIAL_FOODS_COUNT)
+
+
+    def add_player(self, player_id):
+        x,y = self.get_random_position()
+        color = (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
 
