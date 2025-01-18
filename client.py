@@ -1,3 +1,4 @@
+
 import socket
 from game.constants import HOST, PORT 
 
@@ -19,15 +20,6 @@ def start_client():
         
     finally:
         client.close()
-    
- 
-    
-    
-    
-    
-    
-    
-    
-    
+
 if __name__ == "__main__":
     start_client()

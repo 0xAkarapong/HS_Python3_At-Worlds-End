@@ -1,30 +1,27 @@
-import socket
-import threading
+import time
+from game.engine import GameState
+from network import Server 
 from game.constants import HOST, PORT
 
-def broadcast(client):
-    pass
-
-def handle_client(client):
-    pass
-
-#server
-def start_server():
-    try:
-        server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        server.bind((HOST, PORT))
-        server.listen()
-        print(f"Server started on {HOST}:{PORT}")
-        print("Hello")
+def main():
+    game_state = GameState()
+    server = Server(HOST, PORT)
+    server.game_state = game_state
+    server.start()
     
-    except socket.error as msg:
-        print(f"Socket error: {msg}")
-        exit(1)
+    try:
+        print(f"Server started on {HOST}:{PORT}")
         
-    while True:
-        client, addr = server.accept()
-        thread = threading.Thread(target=handle_client, args=(client, addr))
-        thread.start()
+        while True:
+            game_state_data = game_state.get_game_state()
+            server.broadcast_game_state()
+            time.sleep(1 / 60)
+            
+    except Exception as e:
+        print("Shutting down server")
+    finally:
+        server.stop()
+        print("Server stopped")
 
 if __name__ == "__main__":
-    start_server()
+    main()
