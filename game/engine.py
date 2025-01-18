@@ -2,7 +2,8 @@
 from utils import *
 from game.constants import *
 class Player:
-    def __init__(self, x, y, color,radius=STARTING_RADIUS):
+    def __init__(self, player_id, x, y, color,radius=STARTING_RADIUS):
+        self.player_id = player_id
         self.x = x
         self.y = y
         self.color = color
@@ -29,8 +30,27 @@ class Player:
 
     def eat(self, food):
         self.radius += food.radius * 0.2
+    
+    def to_dict(self) -> dict:
+        return {
+            "player_id": self.player_id,
+            "x": self.x,
+            "y": self.y,
+            "color": self.color,
+            "radius": self.radius
+        }
 
 class Food:
-    def __init__(self):
-        pass
+    def __init__(self, x, y, color, radius=FOOD_RADIUS):
+        self.x = x
+        self.y = y
+        self.color = color
+        self.radius = radius
+    def to_dict(self) -> dict:
+        return {
+            "x": self.x,
+            "y": self.y,
+            "color": self.color,
+            "radius": self.radius
+        }
 
