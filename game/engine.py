@@ -77,7 +77,26 @@ class GameState:
             x,y = self.get_random_position()
             color = (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
             self.foods.append(Food(x, y, color))
+    
+    def get_random_position(self) -> tuple:
+        x = random.randint(0, GAME_WIDTH)
+        y = random.randint(0, GAME_HEIGHT)
+        return x, y
 
+    def update(self) -> None:
+        # Player Movement
+        for player in self.players.values():
+            player.move()
+        
+        # Collision Detection and eating food
+        for player in self.players.values():
+            for i in reversed(range(len(self.foods))):
+                food = self.foods[i]
+                if circle_collision(player, food):
+                    player.eat(food)
+                    del self.foods[i]
+        
+        # Player Collision
     def get_game_state(self) -> dict:
         players = [player.to_dict() for player in self.players.values()]
         foods = [food.to_dict() for food in self.foods]
