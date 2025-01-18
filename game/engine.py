@@ -3,7 +3,7 @@ from utils import *
 from game.constants import *
 import random
 class Player:
-    def __init__(self, player_id, x, y, color,radius=STARTING_RADIUS):
+    def __init__(self, player_id: int, x: int, y:int , color: tuple, radius: float=STARTING_RADIUS):
         self.player_id = player_id
         self.x = x
         self.y = y
@@ -11,7 +11,8 @@ class Player:
         self.radius = radius
         self.target_x = x
         self.target_y = y
-    def move(self):
+    
+    def move(self) -> None:
         # Basic movement towards the target (mouse position)
         dx = self.target_x - self.x
         dy = self.target_y - self.y
@@ -29,7 +30,7 @@ class Player:
         self.x = max(0, min(self.x, GAME_WIDTH))
         self.y = max(0, min(self.y, GAME_HEIGHT))
 
-    def eat(self, food):
+    def eat(self, food: Food) -> None:
         self.radius += food.radius * 0.2
     
     def to_dict(self) -> dict:
@@ -42,7 +43,7 @@ class Player:
         }
 
 class Food:
-    def __init__(self, x, y, color, radius=FOOD_RADIUS):
+    def __init__(self, x: int, y: int, color: tuple, radius: float=FOOD_RADIUS):
         self.x = x
         self.y = y
         self.color = color
@@ -62,12 +63,12 @@ class GameState:
         self.generate_food(INITIAL_FOODS_COUNT)
 
 
-    def add_player(self, player_id):
+    def add_player(self, player_id: int) -> None:
         x,y = self.get_random_position()
         color = (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
         self.players[player_id] = Player(player_id, x, y, color)
 
-    def remove_player(self, player_id):
+    def remove_player(self, player_id: int) -> None:
         if player_id in self.players:
             del self.players[player_id]
 
