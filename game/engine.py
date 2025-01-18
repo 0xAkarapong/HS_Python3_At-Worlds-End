@@ -72,6 +72,12 @@ class GameState:
         if player_id in self.players:
             del self.players[player_id]
 
+    def generate_food(self, count: int) -> None:
+        for _ in range(count):
+            x,y = self.get_random_position()
+            color = (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
+            self.foods.append(Food(x, y, color))
+
     def get_game_state(self) -> dict:
         players = [player.to_dict() for player in self.players.values()]
         foods = [food.to_dict() for food in self.foods]
