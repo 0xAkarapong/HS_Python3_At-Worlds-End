@@ -48,12 +48,15 @@ class Food:
         self.y = y
         self.color = color
         self.radius = radius
+        self.eaten = False
+
     def to_dict(self) -> dict:
         return {
             "x": self.x,
             "y": self.y,
             "color": self.color,
-            "radius": self.radius
+            "radius": self.radius,
+            "eaten": self.eaten
         }
     
 class GameState:
@@ -92,11 +95,25 @@ class GameState:
         for player in self.players.values():
             for i in reversed(range(len(self.foods))):
                 food = self.foods[i]
-                if circle_collision(player, food):
+                if circle_collion(player, food):
                     player.eat(food)
                     del self.foods[i]
         
         # Player Collision
+        for other_player in self.players.values():
+            for player in self.players.values():
+                if player.player_id == other_player.player_id:
+                    continue
+                if circle_collion(player, other_player):
+                    if player.radius > other_player.radius:
+                        player.radius += other_player.radius * 0.2
+                        del self.players[other_player.player_id]
+                    elif player.radius < other_player.radius:
+                        other_player.radius += player.radius * 0.2
+                        del self.players[player.player_id]
+                        
+        # Remove eaten food
+        self.foods = [food for food in self.foods if not food.eaten]
     def get_game_state(self) -> dict:
         players = [player.to_dict() for player in self.players.values()]
         foods = [food.to_dict() for food in self.foods]
