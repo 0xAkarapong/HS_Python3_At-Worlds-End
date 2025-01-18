@@ -65,4 +65,8 @@ class GameState:
     def add_player(self, player_id):
         x,y = self.get_random_position()
         color = (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
+        self.players[player_id] = Player(player_id, x, y, color)
 
+    def remove_player(self, player_id):
+        if player_id in self.players:
+            del self.players[player_id]
