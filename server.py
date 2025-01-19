@@ -1,6 +1,6 @@
 import time
 from game.engine import GameState
-from network import Server 
+from game.network import Server 
 from game.constants import HOST, PORT
 
 def main():
