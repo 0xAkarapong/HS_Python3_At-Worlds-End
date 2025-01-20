@@ -7,10 +7,10 @@ SERVER_TICK_RATE = 60  # Updates per second
 CLIENT_FPS = 60
 
 # Game
-SCREEN_WIDTH = 1080
-SCREEN_HEIGHT = 1920
-GAME_WIDTH = 2000  # Game world size (larger than screen)
-GAME_HEIGHT = 2000
+SCREEN_WIDTH = 1000
+SCREEN_HEIGHT = 1000
+GAME_WIDTH = 1200  # Game world size (larger than screen)
+GAME_HEIGHT = 1200
 BG_COLOR = (255, 255, 255)
 
 # Player
