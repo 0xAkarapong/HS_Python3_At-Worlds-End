@@ -1,7 +1,25 @@
 # Engine part
-from utils import *
+from game.utils import *
 from game.constants import *
 import random
+
+class Food:
+    def __init__(self, x: int, y: int, color: tuple, radius: float=FOOD_RADIUS):
+        self.x = x
+        self.y = y
+        self.color = color
+        self.radius = radius
+        self.eaten = False
+
+    def to_dict(self) -> dict:
+        return {
+            "x": self.x,
+            "y": self.y,
+            "color": self.color,
+            "radius": self.radius,
+            "eaten": self.eaten
+        }
+
 class Player:
     def __init__(self, player_id: int, x: int, y:int , color: tuple, radius: float=STARTING_RADIUS):
         self.player_id = player_id
@@ -40,23 +58,6 @@ class Player:
             "y": self.y,
             "color": self.color,
             "radius": self.radius
-        }
-
-class Food:
-    def __init__(self, x: int, y: int, color: tuple, radius: float=FOOD_RADIUS):
-        self.x = x
-        self.y = y
-        self.color = color
-        self.radius = radius
-        self.eaten = False
-
-    def to_dict(self) -> dict:
-        return {
-            "x": self.x,
-            "y": self.y,
-            "color": self.color,
-            "radius": self.radius,
-            "eaten": self.eaten
         }
     
 class GameState:

@@ -2,7 +2,7 @@ import socket
 import threading
 import pickle
 import time
-from game.engine import GameState  # Assuming this is your game logic
+from game.engine import GameState
 
 class Server:
     def __init__(self, host, port):
