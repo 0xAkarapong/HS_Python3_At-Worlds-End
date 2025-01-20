@@ -1,0 +1,24 @@
+# Server
+HOST = '127.0.0.1'
+PORT = 5555
+SERVER_TICK_RATE = 60  # Updates per second
+
+# Client
+CLIENT_FPS = 60
+
+# Game
+SCREEN_WIDTH = 1080
+SCREEN_HEIGHT = 1920
+GAME_WIDTH = 2000  # Game world size (larger than screen)
+GAME_HEIGHT = 2000
+BG_COLOR = (255, 255, 255)
+
+# Player
+STARTING_RADIUS = 20
+MAX_SPEED = 5
+
+# Food
+FOOD_RADIUS = 5
+INITIAL_FOOD_COUNT = 100
+MAX_FOOD = 200
+FOOD_GENERATION_RATE = 5  # Per server tick
