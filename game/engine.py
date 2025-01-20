@@ -103,8 +103,10 @@ class GameState:
         for player in self.players.values():
             player.move()
 
+        players_to_remove = set()  # Set to store IDs of players to remove
+
         # Collision detection and eating
-        for player in self.players.values():
+        for player_id, player in self.players.items():
             for i in reversed(range(len(self.food))):  # Iterate in reverse for safe removal
                 food = self.food[i]
                 if point_in_circle(food.x, food.y, player.x, player.y, player.radius):
@@ -112,18 +114,22 @@ class GameState:
                     food.eaten = True  # Mark as eaten
 
             # Player-player collisions
-            for other_player in self.players.values():
-                if player.id != other_player.id:
+            for other_player_id, other_player in self.players.items():
+                if player_id != other_player_id:
                     if circle_collision(player, other_player):
                         if player.radius > other_player.radius * 1.10:  # 10% bigger
                             player.eat(other_player)
-                            self.remove_player(other_player.id)
+                            players_to_remove.add(other_player_id)  # Mark for removal
                         elif other_player.radius > player.radius * 1.10:
                             other_player.eat(player)
-                            self.remove_player(player.id)
+                            players_to_remove.add(player_id)  # Mark for removal
 
         # Remove eaten food
         self.food = [f for f in self.food if not f.eaten]
+
+        # Remove eaten players
+        for player_id in players_to_remove:
+            self.remove_player(player_id)
 
         # Replenish food (basic, improve in production)
         if len(self.food) < MAX_FOOD:
