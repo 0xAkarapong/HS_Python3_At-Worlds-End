@@ -8,7 +8,7 @@ from game.constants import *
 def main():
     pygame.init()
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
-    pygame.display.set_caption("Agar.io")
+    pygame.display.set_caption("At class's end")
     clock = pygame.time.Clock()
 
     client = Client(HOST, PORT)
