@@ -73,7 +73,7 @@ class Server:
             # Prefix the message with its length
             message = struct.pack('>I', len(serialized_data)) + serialized_data
             client_socket.sendall(message)
-            logger.info(f"Sent to client: {data}")
+            logger.info(f"Sent to client: {data['players']}")
         except (ConnectionResetError, BrokenPipeError) as e:
             logger.info(f"Error sending to client: {e}")
 
@@ -87,6 +87,7 @@ class Server:
             # Receive the actual data
             data = self.recvall(client_socket, message_length)
             if data:
+                logger.info(f"Received from client: {data}")
                 return json.loads(data.decode('utf-8'))
             else:
                 return None
