@@ -3,6 +3,16 @@ import json
 from game.network import Client
 from game.graphics import GameWindow
 from game.constants import *
+import logging
+from logging.handlers import RotatingFileHandler
+
+# Setup lgoging
+logger = logging.getLogger("ClientLogger")
+logger.setLevel(logging.INFO)
+handler = RotatingFileHandler("client.log", maxBytes=10000000, backupCount=1)
+formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
+handler.setFormatter(formatter)
+logger.addHandler(handler)
 
 def main():
     pygame.init()
@@ -16,7 +26,7 @@ def main():
     try:
         client.connect()
         player_id = client.receive()  # Initial message will be the player ID
-        print(f"Connected as Player {player_id}")
+        logger.info(f"Connected as Player {player_id}")
 
         running = True
         while running:
@@ -27,6 +37,7 @@ def main():
             # Get player input
             mouse_x, mouse_y = pygame.mouse.get_pos()
             client.send({"type": "input", "x": mouse_x, "y": mouse_y})
+            logger.info(f"Sent input: {mouse_x}, {mouse_y}")
 
             # Receive and process game state
             data = client.receive()
