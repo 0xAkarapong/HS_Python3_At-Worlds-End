@@ -2,6 +2,16 @@ import socket
 import threading
 import json
 import struct
+import logging
+from logging.handlers import RotatingFileHandler
+
+logger = logging.getLogger("ServerLogger")
+logger.setLevel(logging.INFO)
+handler = RotatingFileHandler("server.log", maxBytes=10000000, backupCount=1)
+formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
+handler.setFormatter(formatter)
+logger.addHandler(handler)
+
 
 class Server:
     def __init__(self, host, port, game_state):  # Add game_state as parameter
@@ -21,7 +31,7 @@ class Server:
     def accept_connections(self):
         while True:
             client_socket, client_address = self.server_socket.accept()
-            print(f"Connection from {client_address} established!")
+            logger.info(f"Connection from {client_address} established!")
 
             player_id = self.next_player_id
             self.next_player_id += 1
@@ -49,7 +59,7 @@ class Server:
                 # Add other command processing logic here
 
             except (ConnectionResetError, BrokenPipeError):
-                print(f"Client {player_id} disconnected.")
+                logger.info(f"Client {player_id} disconnected.")
                 break
 
         # Remove player from the game and close the connection
@@ -63,8 +73,9 @@ class Server:
             # Prefix the message with its length
             message = struct.pack('>I', len(serialized_data)) + serialized_data
             client_socket.sendall(message)
+            logger.info(f"Sent to client: {data}")
         except (ConnectionResetError, BrokenPipeError) as e:
-            print(f"Error sending to client: {e}")
+            logger.info(f"Error sending to client: {e}")
 
     def receive_from_client(self, client_socket):
         try:
@@ -80,7 +91,7 @@ class Server:
             else:
                 return None
         except json.JSONDecodeError:
-            print("Invalid JSON received from client.")
+            logging.info("Invalid JSON received from client.")
             return None
         except (ConnectionResetError, BrokenPipeError) as e:
             return None

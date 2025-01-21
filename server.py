@@ -1,7 +1,14 @@
 import time
-from game.network import Server
+from game.network import Server, logging, RotatingFileHandler
 from game.engine import GameState  # Import GameState
 from game.constants import *
+
+logger = logging.getLogger("ServerLogger")
+logger.setLevel(logging.INFO)
+handler = RotatingFileHandler("server.log", maxBytes=10000000, backupCount=1)
+formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
+handler.setFormatter(formatter)
+logger.addHandler(handler)
 
 
 def main():
@@ -10,7 +17,7 @@ def main():
 
     try:
         server.start()
-        print(f"Server started on {HOST}:{PORT}")
+        logger.info(f"Server started on {HOST}:{PORT}")
 
         # Main game loop (on a separate thread or process for production)
         while True:
@@ -19,7 +26,7 @@ def main():
             time.sleep(1 / SERVER_TICK_RATE)  # Control server tick rate
 
     except KeyboardInterrupt:
-        print("Shutting down server...")
+        logger.info("Shutting down server...")
     finally:
         server.stop()
 
